@@ -14,8 +14,8 @@ export function NavbarLayout() {
     <div className={styles.container}>
       <Image
         src={logo}
-        width={28}
-        height={28}
+        width={25}
+        height={25}
         alt="logo tkiti"
       />
       <Link
@@ -26,7 +26,7 @@ export function NavbarLayout() {
       </Link>
       <Link
         href="/articles"
-        className={`${styles.menu} ${pathname === "" ? styles.active : ""} ${inter.variable}`}
+        className={`${styles.menu} ${pathname === "/articles" ? styles.active : ""} ${inter.variable}`}
       >
         Articles
       </Link>
