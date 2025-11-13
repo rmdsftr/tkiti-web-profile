@@ -25,7 +25,28 @@
   color: #11AEAF;
 }
 
-/* Mobile */
+.container ul li {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.container ul li a {
+    display: block;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.container ul li:hover a {
+    color: #11AEAF;
+    transform: translateX(5px);
+}
+
+.container ul li.active a {
+    color: #11AEAF;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 15pt;

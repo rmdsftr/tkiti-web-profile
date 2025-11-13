@@ -7,10 +7,12 @@ import sejarah from "@/assets/sejarah.png";
 import styles from "@/styles/landing.module.css";
 import { motion } from "framer-motion";
 import { SejarahLayout } from "@/layouts/sejarah";
+import { NavbarLayout } from "@/layouts/navbar";
 
 export default function Home() {
   return (
     <div>
+      <NavbarLayout/>
       <section className={styles.content}>
         <LandingTextLayout/>
         <motion.div

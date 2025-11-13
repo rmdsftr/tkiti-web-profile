@@ -1,0 +1,187 @@
+.main{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.container{
+    color: black;
+    width: 70%;
+    padding: 25pt 75pt;
+    font-family: var(--inter);
+    border-right: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.container h1{
+    font-weight: 600;
+    font-size: 16pt;
+}
+
+.img{
+    border-radius: 10pt;
+    margin: auto;
+    object-fit: cover;
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+    aspect-ratio: 2/1;
+}
+
+.paragraf p{
+    margin-top: 5pt;
+    margin-bottom: 5pt;
+    font-size: 10pt;
+}
+
+.detail{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12pt;
+    font-size: 8pt;
+    color: rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+    gap: 10pt;
+}
+
+.icon{
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+}
+
+.tags{
+    margin-top: 10pt;
+    display: flex;
+    gap: 10pt;
+    flex-wrap: wrap;
+}
+
+.tag{
+    padding: 3pt 10pt;
+    color: #11AEAF;
+    font-size: 8pt;
+    border: 1px solid #11AEAF;
+    width: fit-content;
+    border-radius: 50pt;
+}
+
+.rekomendasi{
+    color: black;
+    padding: 25pt;
+    width: 30%;
+}
+
+.rekomendasi h2{
+    font-weight: 600;
+    margin-bottom: 10pt;
+}
+
+/* Tablet - Medium devices */
+@media (max-width: 1024px) {
+    .container{
+        width: 65%;
+        padding: 20pt 40pt;
+    }
+
+    .container h1{
+        font-size: 14pt;
+    }
+
+    .rekomendasi{
+        width: 35%;
+        padding: 20pt;
+    }
+
+    .paragraf p{
+        font-size: 9pt;
+    }
+
+    .detail{
+        font-size: 7pt;
+    }
+
+    .tag{
+        font-size: 7pt;
+    }
+}
+
+/* Tablet - Small devices */
+@media (max-width: 768px) {
+    .main{
+        flex-direction: column;
+    }
+
+    .container{
+        width: 100%;
+        padding: 20pt 30pt;
+        border-right: none;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    }
+
+    .container h1{
+        font-size: 13pt;
+    }
+
+    .img{
+        max-width: 100%;
+        height: auto;
+    }
+
+    .detail{
+        justify-content: flex-start;
+        gap: 15pt;
+    }
+
+    .rekomendasi{
+        width: 100%;
+        padding: 20pt 30pt;
+    }
+
+    .rekomendasi h2{
+        font-size: 12pt;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+    .container{
+        padding: 15pt 20pt;
+    }
+
+    .container h1{
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+
+    .paragraf p{
+        font-size: 9pt;
+        line-height: 1.6;
+    }
+
+    .detail{
+        flex-direction: column;
+        gap: 8pt;
+        font-size: 7pt;
+    }
+
+    .icon{
+        gap: 4pt;
+    }
+
+    .tags{
+        gap: 8pt;
+    }
+
+    .tag{
+        padding: 2pt 8pt;
+        font-size: 7pt;
+    }
+
+    .rekomendasi{
+        padding: 15pt 20pt;
+    }
+
+    .rekomendasi h2{
+        font-size: 11pt;
+    }
+}

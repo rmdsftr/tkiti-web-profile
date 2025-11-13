@@ -1,57 +1,97 @@
 import { NavbarLayout } from "@/layouts/navbar";
 import FilterDropdown from "@/components/filter";
 import Search from "@/components/search";
-import SidebarArticle from "@/layouts/sidebar-article";
+import SidebarArticleClient from "@/layouts/sidebar-article-client";
 import HeroArticles from "@/components/hero-articles";
 import styles from "@/styles/articles-layout.module.css";
+import { prisma } from "@/lib/db";
 
-const categoryDummy = [
-  "Semua",
-  "Machine Learning",
-  "Enterprise Systems",
-  "Cybersecurity",
-  "Quantum Computing",
-  "Electromagnetics",
-  "Plasma Simulation",
-  "Information Governance",
-  "Data Analytics",
-  "AI Ethics",
-  "Smart City",
-  "Human–AI Collaboration",
-  "Healthcare Informatics",
-  "Robotics",
-  "High-Performance Computing",
-  "Software Engineering",
-];
+interface TagFromDB {
+    tag: string | null;
+}
 
-export default function ArticlesLayout({
-  children,
+async function getTags(): Promise<string[]> {
+    try {
+        const tags = await prisma.tags.findMany({
+            select: {
+                tag: true,
+            },
+            orderBy: {
+                total_article: 'desc', 
+            },
+        });
+   
+        const tagList = tags
+            .map((t: TagFromDB) => t.tag)
+            .filter((tag: string | null): tag is string => tag !== null);
+
+        return ["Semua", ...tagList];
+    } catch (error) {
+        console.error("Error fetching tags:", error);
+        return ["Semua"];
+    }
+}
+
+async function getStats() {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/stats`, {
+            cache: 'no-store', 
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch stats');
+        }
+        
+        const result = await response.json();
+        return result.data;
+    } catch (error) {
+        console.error("Error fetching stats:", error);
+        return {
+            totalArticles: 0,
+            totalTags: 0,
+            totalViews: 0,
+        };
+    }
+}
+
+export default async function ArticlesLayout({
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <>
-      <NavbarLayout />
-      <div className={styles.container}>
-        <HeroArticles />
+    
+    const [categories, stats] = await Promise.all([
+        getTags(),
+        getStats(),
+    ]);
+
+    return (
+        <>
+        <NavbarLayout />
+        <div className={styles.container}>
+        <HeroArticles 
+            totalArtikel={stats.totalArticles}
+            totalTags={stats.totalTags}
+            totalViews={stats.totalViews}
+        />
         
         <main className={styles.main}>
-          <div className={styles.sidebar}>
-            <SidebarArticle ListCategory={categoryDummy} />
-          </div>
-          
-          <div className={styles.contentWrapper}>
-            <div className={styles.controls}>
-              <FilterDropdown />
-              <Search />
-            </div>
-            
-            <div className={styles.content}>
-              {children}
-            </div>
-          </div>
+        <div className={styles.sidebar}>
+        <SidebarArticleClient ListCategory={categories} /> 
+        </div>
+        
+        <div className={styles.contentWrapper}>
+        <div className={styles.controls}>
+        <FilterDropdown />
+        <Search />
+        </div>
+        
+        <div className={styles.content}>
+        {children}
+        </div>
+        </div>
         </main>
-      </div>
-    </>
-  );
+        </div>
+        </>
+    );
 }

@@ -1,0 +1,14 @@
+.container{
+    background-color: white;
+    padding: 10pt;
+    border-radius: 100px;
+    position: fixed;
+    z-index: 99;
+    top: 20pt;
+    left: 15pt;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.container:hover{
+    cursor: pointer;
+}

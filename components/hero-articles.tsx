@@ -1,7 +1,13 @@
 import styles from "@/styles/hero-articles.module.css";
 import inter from "@/fonts/inter";
 
-export default function HeroArticles() {
+interface Props{
+    totalArtikel:number;
+    totalTags:number;
+    totalViews:number;
+}
+
+export default function HeroArticles({totalArtikel, totalTags, totalViews} : Props) {
   return (
     <div className={`${styles.container} ${inter.variable}`}>
       <div className={styles.content}>
@@ -11,17 +17,17 @@ export default function HeroArticles() {
         </p>
         <div className={styles.stats}>
           <div className={styles.statItem}>
-            <span className={styles.statNumber}>15+</span>
+            <span className={styles.statNumber}>{totalArtikel}</span>
             <span className={styles.statLabel}>Artikel</span>
           </div>
           <div className={styles.divider}></div>
           <div className={styles.statItem}>
-            <span className={styles.statNumber}>16+</span>
+            <span className={styles.statNumber}>{totalTags}</span>
             <span className={styles.statLabel}>Kategori</span>
           </div>
           <div className={styles.divider}></div>
           <div className={styles.statItem}>
-            <span className={styles.statNumber}>10K+</span>
+            <span className={styles.statNumber}>{totalViews}</span>
             <span className={styles.statLabel}>Pembaca</span>
           </div>
         </div>

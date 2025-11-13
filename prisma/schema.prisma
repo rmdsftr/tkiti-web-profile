@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  nim       String    @id @db.VarChar(25)
+  nama      String?   @db.VarChar(255)
+  no_aslab  String?   @unique(map: "no_aslab") @db.VarChar(25)
+  deskripsi String?   @db.Text
+  article   article[]
+}
+
+model article {
+  article_id  String        @id @db.Char(36)
+  judul       String?       @db.VarChar(255)
+  photo_url   String?       @db.Text
+  content     String?       @db.Text
+  created_at  DateTime      @default(now()) @db.Timestamp(0)
+  updated_at  DateTime      @default(now()) @db.Timestamp(0)
+  views       Int?
+  nim         String?       @db.VarChar(25)
+  admin       admin?        @relation(fields: [nim], references: [nim], onDelete: Restrict, onUpdate: Restrict, map: "article_ibfk_1")
+  article_tag article_tag[]
+
+  @@index([nim], map: "nim")
+}
+
+model article_tag {
+  article_id String  @db.Char(36)
+  tag_id     Int
+  article    article @relation(fields: [article_id], references: [article_id], onUpdate: Restrict, map: "article_tag_ibfk_1")
+  tags       tags    @relation(fields: [tag_id], references: [tag_id], onUpdate: Restrict, map: "article_tag_ibfk_2")
+
+  @@id([article_id, tag_id])
+  @@index([tag_id], map: "tag_id")
+}
+
+model tags {
+  tag_id        Int           @id @default(autoincrement())
+  tag           String?       @db.VarChar(255)
+  total_article Int?
+  article_tag   article_tag[]
+}
