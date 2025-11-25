@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaEye, FaPen, FaRegCalendarTimes } from "react-icons/fa";
 import styles from "@/styles/read-article.module.css";
 import inter from "@/fonts/inter";
-import CardRekomendasi from "@/layouts/card-rekomendasi";
+import CardRekomendasi from "@/sections/card-rekomendasi";
 import FloatingBackButton from "@/components/floating-back";
 import { motion, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";

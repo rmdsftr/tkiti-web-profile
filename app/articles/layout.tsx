@@ -1,7 +1,7 @@
-import { NavbarLayout } from "@/layouts/navbar";
+import Navbar from "@/components/Navbar";
 import FilterDropdown from "@/components/filter";
 import Search from "@/components/search";
-import SidebarArticleClient from "@/layouts/sidebar-article-client";
+import SidebarArticleClient from "@/sections/sidebar-article-client";
 import HeroArticles from "@/components/hero-articles";
 import styles from "@/styles/articles-layout.module.css";
 import { prisma } from "@/lib/db";
@@ -67,7 +67,7 @@ export default async function ArticlesLayout({
 
     return (
         <>
-        <NavbarLayout />
+        <Navbar />
         <div className={styles.container}>
         <HeroArticles 
             totalArtikel={stats.totalArticles}

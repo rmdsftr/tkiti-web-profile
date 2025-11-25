@@ -1,50 +1,64 @@
 "use client";
 
-import Image from "next/image";
-import { LandingTextLayout } from "@/layouts/landing";
-import logo from "@/assets/logo-3d.png";
-import sejarah from "@/assets/sejarah.png";
-import styles from "@/styles/landing.module.css";
 import { motion } from "framer-motion";
-import { SejarahLayout } from "@/layouts/sejarah";
-import { NavbarLayout } from "@/layouts/navbar";
+
+import Navbar from "@/components/Navbar";
+
+import Hero from "@/sections/Hero";
+import Sejarah from "@/sections/Sejarah";
+import Kegiatan from "@/sections/Kegiatan";
+import TechTools from "@/sections/TechTools";
+import Struktur from "@/sections/Struktur";
+import Gallery from "@/sections/Gallery";
+
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  return (
-    <div>
-      <NavbarLayout/>
-      <section className={styles.content}>
-        <LandingTextLayout/>
-        <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            whileTap={{ scale: 0.95 }}
-        >
-            <Image
-              src={logo}
-              width={425}
-              height={425}
-              alt="logo tkiti"
-            />
-        </motion.div>
-      </section>
-      <section className={styles.sejarah}>
-        <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            whileTap={{ scale: 0.95 }}
-        >
-            <Image
-              src={sejarah}
-              width={450}
-              height={450}
-              alt="logo tkiti"
-            />
-        </motion.div>
-        <SejarahLayout/>
-      </section>
-    </div>
-  );
+    return (
+        <main>
+            <Navbar />
+
+            <Hero />
+
+            <motion.div
+                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <Sejarah />
+            </motion.div>
+
+            <Kegiatan />
+
+            <motion.div
+                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <TechTools />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <Struktur />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <Gallery />
+            </motion.div>
+
+            <Footer />
+        </main>
+    );
 }

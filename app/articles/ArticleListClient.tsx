@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "@/components/pagination";
-import CardArticle from "@/layouts/card-article";
+import CardArticle from "@/sections/card-article";
 import styles from "@/styles/article-page.module.css";
 
 interface Article {

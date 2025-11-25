@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TKITI",
-  description: "web profile",
+  title: "Laboratorium Tata Kelola dan Infrastruktur Teknologi Informasi",
+  description: "Website Resmi Laboratorium TKITI SI UNAND",
 };
 
 export default function RootLayout({
