@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 import Button from "@/components/Button";
@@ -40,7 +38,6 @@ export default function Struktur() {
                                 src={illustration}
                                 alt="Ilustrasi Struktur"
                                 className="w-full md:w-[600px] object-contain"
-                                priority
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             />
                         </div>

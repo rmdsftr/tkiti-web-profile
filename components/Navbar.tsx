@@ -1,13 +1,16 @@
 "use client";
+import { motion } from "framer-motion";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+
+import { Menu, X } from "lucide-react";
+
 import logo from "@/assets/logo.png";
 import inter from "@/fonts/inter";
-import { Menu, X } from "lucide-react";
-import { motion } from "framer-motion"; // Import Framer Motion
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -16,6 +19,8 @@ export default function Navbar() {
     const navItems = [
         { name: "About", href: "/" },
         { name: "Articles", href: "/articles" },
+        { name: "Structure", href: "/structure" },
+        { name: "Repository", href: "/repository" },
         { name: "Free Hosting", href: "/free-hosting" },
     ];
 

@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import illustration from "@/assets/illustrations/server-illustration.png";
 
@@ -37,7 +35,6 @@ export default function Sejarah() {
                                 src={illustration}
                                 alt="Ilustrasi Server"
                                 className="w-full md:w-[600px] object-contain"
-                                priority
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             />
                         </div>

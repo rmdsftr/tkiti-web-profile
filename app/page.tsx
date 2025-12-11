@@ -1,7 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
-
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 import Navbar from "@/components/Navbar";
 
 import Hero from "@/sections/Hero";
@@ -20,43 +17,23 @@ export default function Home() {
 
             <Hero />
 
-            <motion.div
-                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
-                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <AnimateOnScroll>
                 <Sejarah />
-            </motion.div>
+            </AnimateOnScroll>
 
             <Kegiatan />
 
-            <motion.div
-                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
-                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <AnimateOnScroll>
                 <TechTools />
-            </motion.div>
+            </AnimateOnScroll>
 
-            <motion.div
-                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
-                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <AnimateOnScroll>
                 <Struktur />
-            </motion.div>
+            </AnimateOnScroll>
 
-            <motion.div
-                initial={{ opacity: 0, filter: "blur(15px)", y: 50 }}
-                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <AnimateOnScroll>
                 <Gallery />
-            </motion.div>
+            </AnimateOnScroll>
 
             <Footer />
         </main>

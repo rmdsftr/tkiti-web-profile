@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 // Load Logo 3D
 function Model(props: any) {
-  const { scene } = useGLTF("/logo.glb");
+  const { scene } = useGLTF("/logo-optimized.glb");
   return <primitive object={scene} {...props} />;
 }
 
@@ -29,7 +29,7 @@ function Rig({ children }: { children: React.ReactNode }) {
 }
 
 // Preload logo 3D agar langsung muncul
-useGLTF.preload("/logo.glb");
+useGLTF.preload("/logo-optimized.glb");
 
 // Komponen Utama
 export default function Logo3D() {

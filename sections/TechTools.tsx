@@ -79,7 +79,6 @@ export default function TechTools() {
                              transition-all duration-300 
                              /* Saat Hover: Jadi berwarna & jelas & sedikit membesar */
                              group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110"
-                  priority={index < tools.length}
                 />
               </div>
             ))}

@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import { motion, Variants } from "framer-motion";
+import { useSyncExternalStore, useCallback } from "react";
 
 import inter from "@/fonts/inter";
 import Button from "@/components/Button";
@@ -11,15 +12,39 @@ const Logo3D = dynamic(() => import("@/components/Logo3D"), {
     ssr: false 
 });
 
-const blurIn: Variants = {
-    hidden: { opacity: 0, filter: "blur(20px)", y: 20 },
+const fadeIn: Variants = {
+    hidden: { opacity: 0, y: 20 },
     visible: (customDelay: number = 0) => ({
-        opacity: 1, filter: "blur(0px)", y: 0,
-        transition: { delay: customDelay, duration: 1.2, ease: [0.22, 1, 0.36, 1] as const },
+        opacity: 1, y: 0,
+        transition: { delay: customDelay, duration: 0.8, ease: "easeInOut" },
     }),
 };
 
+function useMediaQuery(query: string) {
+    const subscribe = useCallback((callback: () => void) => {
+      const matchMedia = window.matchMedia(query);
+      matchMedia.addEventListener("change", callback);
+      return () => {
+        matchMedia.removeEventListener("change", callback);
+      };
+    }, [query]);
+  
+    const getSnapshot = () => {
+      return window.matchMedia(query).matches;
+    };
+  
+    // On the server, we can't know the screen size, so we can default to a value.
+    // False is a safe default because it prevents the heavy component from being server-rendered.
+    const getServerSnapshot = () => {
+      return false;
+    };
+  
+    return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
 export default function Hero() {
+    const isDesktop = useMediaQuery("(min-width: 1024px)");
+
     const scroll = () => {
         const element = document.getElementById('sejarah');
         if (element) {
@@ -33,32 +58,36 @@ export default function Hero() {
             id="hero"
             className={`${inter.variable} relative w-full md:min-h-screen flex items-center px-8 md:px-24 lg:px-32 py-8 pt-32 md:pt-24 overflow-hidden`}
         >
-            {/* Layer 1 (z-0): Logo 3D*/}
-            <div className="absolute inset-0 z-0 hidden lg:flex items-center justify-end pointer-events-none translate-x-[15%]">
-                <motion.div
-                    className="w-full h-full" 
-                    initial={{ opacity: 0, x:50 }}
-                    animate={{ opacity: 1, x:0 }}
-                    transition={{ duration: 1.25, ease: "easeInOut" }}
-                    style={{ willChange: "transform, opacity" }}
-                >
-                    <Logo3D />
-                </motion.div>
-            </div>
+            {/* Layer 1 (z-0): Logo 3D */}
+            {isDesktop && (
+                <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none translate-x-[15%]">
+                    <motion.div
+                        className="w-full h-full" 
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.25, ease: "easeInOut" }}
+                        style={{ willChange: "transform, opacity" }}
+                    >
+                        <Logo3D />
+                    </motion.div>
+                </div>
+            )}
 
-            {/* Layer 2 (z-10): Masking belakang text*/}
-            <div 
-                className="absolute inset-0 z-10 pointer-events-none hidden lg:block"
-                style={{
-                    background: "linear-gradient(90deg, #FFFFFF 40%, rgba(255,255,255,0) 75%)"
-                }}
-            />
+            {/* Layer 2 (z-10): Masking belakang text */}
+            {isDesktop && (
+                <div 
+                    className="absolute inset-0 z-10 pointer-events-none"
+                    style={{
+                        background: "linear-gradient(90deg, #FFFFFF 40%, rgba(255,255,255,0) 75%)"
+                    }}
+                />
+            )}
 
             {/* Layer 3 (z-20): Text*/}
             <div className="relative z-20 w-full lg:w-7/12 max-w-4xl space-y-8 md:space-y-10 text-center lg:text-left">
                 <motion.h1 
                     className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold tracking-tighter leading-tight text-black" 
-                    variants={blurIn} 
+                    variants={fadeIn} 
                     initial="hidden" 
                     animate="visible" 
                     custom={0}
@@ -68,7 +97,7 @@ export default function Hero() {
 
                 <motion.p 
                     className="text-base sm:text-sm lg:text-md xl:text-lg leading-relaxed text-justify text-gray-700 max-w-3xl mx-auto md:mx-0" 
-                    variants={blurIn} 
+                    variants={fadeIn} 
                     initial="hidden" 
                     animate="visible" 
                     custom={0.2}
@@ -78,7 +107,7 @@ export default function Hero() {
 
                 <motion.div 
                     className="pt-4 md:pt-6" 
-                    variants={blurIn} 
+                    variants={fadeIn} 
                     initial="hidden" 
                     animate="visible" 
                     custom={0.4}
