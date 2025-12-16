@@ -86,7 +86,7 @@ export default function Hero() {
             {/* Layer 3 (z-20): Text*/}
             <div className="relative z-20 w-full lg:w-7/12 max-w-4xl space-y-8 md:space-y-10 text-center lg:text-left">
                 <motion.h1 
-                    className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold tracking-tighter leading-tight text-black" 
+                    className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl font-extrabold tracking-tighter leading-tight text-black" 
                     variants={fadeIn} 
                     initial="hidden" 
                     animate="visible" 
