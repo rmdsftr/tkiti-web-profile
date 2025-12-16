@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { article_status_article } from "@prisma/client";
 
 interface ArticleFromDB {
     article_id: string;
@@ -63,7 +64,10 @@ export async function GET(request: NextRequest) {
         }
         
         const articles = await prisma.article.findMany({
-            where: whereClause,
+            where: {
+                ...whereClause,
+                status_article: article_status_article.published
+            },
             select: {
                 article_id: true,
                 judul: true,
@@ -74,11 +78,11 @@ export async function GET(request: NextRequest) {
             orderBy: orderBy,
         });
         
-        const formattedArticles = articles.map((article: ArticleFromDB) => ({
+        const formattedArticles = articles.map((article) => ({
             id: article.article_id,
             gambar: article.photo_url,
-            judul: article.judul || "Tanpa Judul",
-            seen: article.views || 0,
+            judul: article.judul ?? "Tanpa Judul",
+            seen: article.views ? Number(article.views) : 0,
             tanggal: article.created_at,
         }));
         

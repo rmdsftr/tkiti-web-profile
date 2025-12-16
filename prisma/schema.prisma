@@ -8,41 +8,156 @@ datasource db {
 }
 
 model admin {
-  nim       String    @id @db.VarChar(25)
-  nama      String?   @db.VarChar(255)
-  no_aslab  String?   @unique(map: "no_aslab") @db.VarChar(25)
-  deskripsi String?   @db.Text
-  article   article[]
+  nim         String        @id @db.VarChar(25)
+  nama        String        @db.VarChar(255)
+  no_aslab    String        @unique(map: "uni_admin_no_aslab") @db.VarChar(25)
+  pword       String        @db.Text
+  deskripsi   String?       @db.Text
+  photo_url   String?       @db.Text
+  role        admin_role?   @default(member)
+  status      admin_status? @default(aktif)
+  article     article[]
+  kontributor kontributor[]
+  pengurus    pengurus[]
+
+  @@index([nama], map: "idx_admin_nama")
 }
 
 model article {
-  article_id  String        @id @db.Char(36)
-  judul       String?       @db.VarChar(255)
-  photo_url   String?       @db.Text
-  content     String?       @db.Text
-  created_at  DateTime      @default(now()) @db.Timestamp(0)
-  updated_at  DateTime      @default(now()) @db.Timestamp(0)
-  views       Int?
-  nim         String?       @db.VarChar(25)
-  admin       admin?        @relation(fields: [nim], references: [nim], onDelete: Restrict, onUpdate: Restrict, map: "article_ibfk_1")
-  article_tag article_tag[]
+  article_id     String                  @id @db.Char(36)
+  judul          String?                 @db.VarChar(255)
+  photo_url      String?                 @db.Text
+  content        String?                 @db.Text
+  status_article article_status_article?
+  views          BigInt?
+  created_at     DateTime?
+  updated_at     DateTime?
+  nim            String?                 @db.VarChar(25)
+  admin          admin?                  @relation(fields: [nim], references: [nim], map: "article_ibfk_1")
+  article_tag    article_tag[]
 
-  @@index([nim], map: "nim")
+  @@index([nim], map: "fk_article_admin")
+  @@index([judul], map: "idx_article_judul")
 }
 
 model article_tag {
   article_id String  @db.Char(36)
-  tag_id     Int
-  article    article @relation(fields: [article_id], references: [article_id], onUpdate: Restrict, map: "article_tag_ibfk_1")
-  tags       tags    @relation(fields: [tag_id], references: [tag_id], onUpdate: Restrict, map: "article_tag_ibfk_2")
+  tag_id     BigInt
+  article    article @relation(fields: [article_id], references: [article_id], onDelete: Cascade, map: "article_tag_ibfk_1")
+  tags       tags    @relation(fields: [tag_id], references: [tag_id], onDelete: Cascade, map: "article_tag_ibfk_2")
 
   @@id([article_id, tag_id])
-  @@index([tag_id], map: "tag_id")
+  @@index([tag_id], map: "fk_article_tag_tags")
 }
 
 model tags {
-  tag_id        Int           @id @default(autoincrement())
-  tag           String?       @db.VarChar(255)
-  total_article Int?
+  tag_id        BigInt        @id @default(autoincrement())
+  tag           String
+  total_article BigInt?
   article_tag   article_tag[]
+
+  @@index([tag], map: "idx_tags_tag")
+}
+
+model dokumentasi {
+  link_id       BigInt  @id @default(autoincrement())
+  link          String? @db.Text
+  repositori_id String  @db.Char(36)
+
+  @@index([repositori_id], map: "idx_dokumentasi_repositori_id")
+}
+
+model kegiatan {
+  kegiatan_id String    @id @db.Char(36)
+  judul       String?   @db.VarChar(255)
+  deskripsi   String?   @db.Text
+  photo_url   String?   @db.Text
+  created_at  DateTime?
+  updated_at  DateTime?
+
+  @@index([judul], map: "idx_kegiatan_judul")
+}
+
+model kontributor {
+  nim           String @db.VarChar(25)
+  repositori_id String @db.Char(36)
+  admin         admin  @relation(fields: [nim], references: [nim], map: "fk_kontributor_admin")
+
+  @@id([nim, repositori_id])
+  @@index([nim], map: "idx_kontributor_nim")
+  @@index([repositori_id], map: "idx_kontributor_repositori_id")
+}
+
+model pengurus {
+  periode_id String            @db.Char(36)
+  nim        String            @db.VarChar(25)
+  divisi     pengurus_divisi?
+  jabatan    pengurus_jabatan?
+  admin      admin             @relation(fields: [nim], references: [nim], onDelete: Cascade, map: "fk_pengurus_admin")
+  periode    periode           @relation(fields: [periode_id], references: [periode_id], onDelete: Cascade, map: "fk_pengurus_periode")
+
+  @@id([periode_id, nim])
+  @@index([nim], map: "fk_pengurus_admin")
+}
+
+model periode {
+  periode_id     String                  @id @db.Char(36)
+  nama_periode   String
+  status_periode periode_status_periode?
+  pengurus       pengurus[]
+
+  @@index([nama_periode], map: "idx_periode_nama_periode")
+}
+
+model repositori {
+  repositori_id String                 @id @db.Char(36)
+  judul_repo    String                 @db.VarChar(255)
+  deskripsi     String?                @db.Text
+  photo_url     String?                @db.Text
+  jenis_repo    repositori_jenis_repo?
+  created_at    DateTime?
+  updated_at    DateTime?
+
+  @@index([jenis_repo], map: "idx_repositori_jenis_repo")
+}
+
+enum pengurus_divisi {
+  inti
+  litbang
+  rtk
+  pengpel
+}
+
+enum periode_status_periode {
+  aktif
+  nonaktif
+}
+
+enum pengurus_jabatan {
+  kordas
+  sekretaris
+  bendahara
+  koordinator
+  anggota
+}
+
+enum article_status_article {
+  published
+  draft
+}
+
+enum repositori_jenis_repo {
+  prestasi
+  ilmiah
+  proyek
+}
+
+enum admin_role {
+  admin
+  member
+}
+
+enum admin_status {
+  aktif
+  nonaktif
 }

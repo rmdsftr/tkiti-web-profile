@@ -66,18 +66,12 @@ async function getArticles(
             orderBy: orderBy,
         });
         
-        const formattedArticles: Article[] = articles.map((article: {
-            article_id: string;
-            judul: string | null;
-            photo_url: string | null;
-            views: number | null;
-            created_at: Date;
-        }) => ({
+        const formattedArticles = articles.map((article) => ({
             id: article.article_id,
             gambar: article.photo_url,
             judul: article.judul || "Tanpa Judul",
-            seen: article.views || 0,
-            tanggal: article.created_at,
+            seen: Number(article.views ?? 0),
+            tanggal: article.created_at || new Date(), // Berikan default Date jika null
         }));
         
         return formattedArticles;

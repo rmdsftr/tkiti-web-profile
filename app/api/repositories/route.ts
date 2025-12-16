@@ -1,25 +1,20 @@
-import { prisma } from "@/lib/db";
-import { repositori_jenis_repo } from "@prisma/client";
-import RepositoryClientPage from "./RepositoryClientPage";
-import placeholder from "@/assets/gallery/placeholder.png";
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
+import { repositori_jenis_repo } from '@prisma/client';
 
-interface Repository {
-  id: string;
-  title: string;
-  description: string;
-  image: string | null;
-  badge: {
-    label: string;
-    color: string;
-  };
-  contributors: { name: string; nim: string }[];
-  documentationLinks: { id: number; label: string; url: string }[];
-  created_at: Date | null;
-}
-
-async function getRepositories(): Promise<Repository[]> {
+export async function GET(request: NextRequest) {
   try {
+    const searchParams = request.nextUrl.searchParams;
+    const filter = searchParams.get('filter') as repositori_jenis_repo | 'all' | null;
+
+    // Build where clause based on filter
+    const whereClause: any = {};
+    if (filter && filter !== 'all') {
+      whereClause.jenis_repo = filter;
+    }
+
     const repositories = await prisma.repositori.findMany({
+      where: whereClause,
       select: {
         repositori_id: true,
         judul_repo: true,
@@ -66,11 +61,11 @@ async function getRepositories(): Promise<Repository[]> {
           id: repo.repositori_id,
           title: repo.judul_repo,
           description: repo.deskripsi || '',
-          image: repo.photo_url,
+          image: repo.photo_url || null,
           badge: {
-            label: repo.jenis_repo === repositori_jenis_repo.ilmiah ? 'Publikasi' : 
-                   repo.jenis_repo === repositori_jenis_repo.prestasi ? 'Prestasi' : 'Proyek',
-            color: repo.jenis_repo === repositori_jenis_repo.ilmiah ? 'publikasi' : repo.jenis_repo || 'proyek',
+            label: repo.jenis_repo === 'ilmiah' ? 'Publikasi' : 
+                   repo.jenis_repo === 'prestasi' ? 'Prestasi' : 'Proyek',
+            color: repo.jenis_repo === 'ilmiah' ? 'publikasi' : repo.jenis_repo,
           },
           contributors: contributors.map((c) => ({
             name: c.admin.nama,
@@ -86,15 +81,19 @@ async function getRepositories(): Promise<Repository[]> {
       })
     );
 
-    return repositoriesWithDetails;
+    return NextResponse.json({
+      success: true,
+      data: repositoriesWithDetails,
+    });
   } catch (error) {
     console.error('Error fetching repositories:', error);
-    return [];
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Failed to fetch repositories',
+        data: [],
+      },
+      { status: 500 }
+    );
   }
-}
-
-export default async function RepositoryPage() {
-  const repositories = await getRepositories();
-
-  return <RepositoryClientPage initialRepositories={repositories} />;
 }

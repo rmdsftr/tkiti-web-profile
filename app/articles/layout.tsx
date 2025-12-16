@@ -5,6 +5,7 @@ import SidebarArticleClient from "@/sections/sidebar-article-client";
 import HeroArticles from "@/components/hero-articles";
 import styles from "@/styles/articles-layout.module.css";
 import { prisma } from "@/lib/db";
+import { article_status_article } from "@prisma/client";
 
 interface TagFromDB {
     tag: string | null;
@@ -19,6 +20,15 @@ async function getTags(): Promise<string[]> {
             orderBy: {
                 total_article: 'desc', 
             },
+            where: {
+                article_tag:{
+                    some: {
+                        article: {
+                            status_article: article_status_article.published
+                        }
+                    }
+                }
+            }
         });
    
         const tagList = tags

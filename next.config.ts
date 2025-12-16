@@ -8,10 +8,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         // Mengizinkan semua subdomain Supabase (misalnya, [project_ref].supabase.co)
-        hostname: '*.supabase.co', 
+        hostname: 'pub-d52bdfbf3fab4b55acca6a742c86b129.r2.dev',
         port: '',
         // Membatasi path hanya pada public storage Supabase untuk keamanan
-        pathname: '/storage/v1/object/public/**', 
+        pathname: '/**',
       },
     ],
   },

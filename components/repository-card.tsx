@@ -8,9 +8,11 @@ import { X } from "lucide-react";
 
 interface Contributor {
   name: string;
+  nim?: string; // nim is optional since it might not always be displayed
 }
 
 interface DocumentationLink {
+  id?: number; // Optional since it might come from different sources
   label: string;
   url: string;
 }
@@ -89,76 +91,81 @@ export default function RepositoryCard({
           </p>
 
           {/* Documentation Links */}
-          <div className="flex flex-col gap-2 md:gap-3 mt-1">
-            <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-[#11AEAF] uppercase tracking-wide">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-              </svg>
-              <span>Dokumentasi</span>
-            </div>
-            <div className="flex flex-col gap-1.5 md:gap-2">
-              {documentationLinks.map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs md:text-sm text-gray-600 hover:text-[#11AEAF] transition-colors duration-200"
+          {documentationLinks.length > 0 && (
+            <div className="flex flex-col gap-2 md:gap-3 mt-1">
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-[#11AEAF] uppercase tracking-wide">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+                <span>Dokumentasi</span>
+              </div>
+              <div className="flex flex-col gap-1.5 md:gap-2">
+                {documentationLinks.map((link, idx) => (
+                  <a
+                    key={link.id || idx}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-2 text-xs md:text-sm text-gray-600 hover:text-[#11AEAF] transition-colors duration-200"
                   >
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                  </svg>
-                  <span className="line-clamp-1">{link.label}</span>
-                </a>
-              ))}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
+                    <span className="line-clamp-1">{link.label}</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Contributors */}
-          <div className="flex flex-col gap-2 md:gap-3 mt-auto">
-            <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-[#11AEAF] uppercase tracking-wide">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-              <span>Kontributor</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {contributors.map((contributor, idx) => (
-                <span
-                  key={idx}
-                  className="inline-block px-3 py-1.5 bg-[#D1E8E8] text-[#0F766E] rounded-full text-xs md:text-sm font-medium"
+          {contributors.length > 0 && (
+            <div className="flex flex-col gap-2 md:gap-3 mt-auto">
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-[#11AEAF] uppercase tracking-wide">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  {contributor.name}
-                </span>
-              ))}
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span>Kontributor</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {contributors.map((contributor, idx) => (
+                  <span
+                    key={contributor.nim || idx}
+                    className="inline-block px-3 py-1.5 bg-[#D1E8E8] text-[#0F766E] rounded-full text-xs md:text-sm font-medium"
+                  >
+                    {contributor.name}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -248,7 +255,7 @@ export default function RepositoryCard({
                     <div className="space-y-2">
                       {documentationLinks.map((link, idx) => (
                         <a
-                          key={idx}
+                          key={link.id || idx}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -294,7 +301,7 @@ export default function RepositoryCard({
                     <div className="flex flex-wrap gap-2">
                       {contributors.map((contributor, idx) => (
                         <span
-                          key={idx}
+                          key={contributor.nim || idx}
                           className="inline-block px-3 py-2 bg-[#D1E8E8] text-[#0F766E] rounded-full text-sm font-medium"
                         >
                           {contributor.name}

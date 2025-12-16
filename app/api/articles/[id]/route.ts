@@ -45,13 +45,13 @@ export async function GET(
       judul: article.judul,
       photo_url: article.photo_url,
       content: article.content,
-      views: article.views || 0,
+      views: Number(article.views || BigInt(0)),
       created_at: article.created_at,
       updated_at: article.updated_at,
       penulis: article.admin?.nama || 'Unknown',
       nim: article.nim,
-      tags: article.article_tag.map((at: { tags: { tag_id: number; tag: string | null } }) => ({
-        tag_id: at.tags.tag_id,
+      tags: article.article_tag.map((at) => ({
+        tag_id: Number(at.tags.tag_id), // Konversi bigint ke number
         tag: at.tags.tag,
       })),
     };
