@@ -26,7 +26,6 @@ const blurIn: Variants = {
 
 export default function Hero() {
 
-  // Fungsi untuk Scroll
     const scroll = () => {
         const element = document.getElementById('sejarah');
         if (element) {

@@ -33,8 +33,6 @@ function useMediaQuery(query: string) {
       return window.matchMedia(query).matches;
     };
   
-    // On the server, we can't know the screen size, so we can default to a value.
-    // False is a safe default because it prevents the heavy component from being server-rendered.
     const getServerSnapshot = () => {
       return false;
     };
@@ -58,7 +56,6 @@ export default function Hero() {
             id="hero"
             className={`${inter.variable} relative w-full md:min-h-screen flex items-center px-8 md:px-24 lg:px-32 py-8 pt-32 md:pt-24 overflow-hidden`}
         >
-            {/* Layer 1 (z-0): Logo 3D */}
             {isDesktop && (
                 <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none translate-x-[15%]">
                     <motion.div
@@ -73,7 +70,6 @@ export default function Hero() {
                 </div>
             )}
 
-            {/* Layer 2 (z-10): Masking belakang text */}
             {isDesktop && (
                 <div 
                     className="absolute inset-0 z-10 pointer-events-none"
@@ -83,7 +79,6 @@ export default function Hero() {
                 />
             )}
 
-            {/* Layer 3 (z-20): Text*/}
             <div className="relative z-20 w-full lg:w-7/12 max-w-4xl space-y-8 md:space-y-10 text-center lg:text-left">
                 <motion.h1 
                     className="text-3xl sm:text-4xl md:text-4xl lg:text-4xl font-extrabold tracking-tighter leading-tight text-black" 

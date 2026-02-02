@@ -29,7 +29,6 @@ export default function TechTools() {
   return (
     <section className="w-full py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Title */}
         <motion.h2
           className="text-3xl md:text-4xl font-extrabold text-black mb-16 md:mb-24 tracking-tighter uppercase text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -40,7 +39,6 @@ export default function TechTools() {
           TECH & TOOLS
         </motion.h2>
 
-        {/* Marquee */}
         <div 
           className="relative w-full overflow-hidden"
           style={{
@@ -74,10 +72,8 @@ export default function TechTools() {
                   width={112}
                   height={112}
                   className="max-w-full max-h-full object-contain 
-                             /* EFEK VISUAL MODERN: */
                              filter grayscale opacity-60 
                              transition-all duration-300 
-                             /* Saat Hover: Jadi berwarna & jelas & sedikit membesar */
                              group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110"
                 />
               </div>

@@ -8,7 +8,6 @@ export default function Sejarah() {
     return (
         <section id="sejarah" className="w-full relative py-4">
             
-            {/* Wave Atas */}
             <div className="w-full leading-0 -mb-px">
                 <svg
                     className="w-full h-24 md:h-48 lg:h-80 block"
@@ -24,12 +23,10 @@ export default function Sejarah() {
                 </svg>
             </div>
 
-            {/* Body */}
             <div className="w-full relative z-10" style={{ backgroundColor: themeColor }}>
                 <div className="container mx-auto px-6 lg:px-12 py-8 md:py-12">
                     
-                    <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-15">
-                        {/* Left Image */}
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-8">
                         <div className="w-full lg:w-1/2 flex justify-center md:top-32">
                             <Image
                                 src={illustration}
@@ -39,13 +36,12 @@ export default function Sejarah() {
                             />
                         </div>
 
-                        {/* Right Content */}
-                        <div className="w-full lg:w-1/2 space-y-6 text-gray-800">
-                            <h2 className="text-3xl md:text-4xl font-extrabold text-black text-center md:text-left tracking-tighter">
+                        <div className="w-full lg:w-1/2 space-y-6 lg:pl-20">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-black text-center md:text-left tracking-tighter">
                                 SEJARAH
                             </h2>
 
-                            <div className="space-y-4 text-justify leading-relaxed text-sm md:text-base">
+                            <div className="space-y-4 text-justify leading-relaxed text-sm md:text-base text-gray-600">
                                 <p>
                                     Perjalanan Laboratorium Tata Kelola dan Infrastruktur Teknologi Informasi berawal pada 3 Februari 2016, ketika di Fakultas Teknologi Informasi didirikan sebuah laboratorium bernama Laboratorium Dasar Sistem Informasi (LDSI). Kepala laboratorium pertama adalah Bapak Fajril Akbar, M.T., dengan Kevin Valdi Arrestino sebagai koordinator asisten pertama.
                                 </p>
@@ -64,7 +60,6 @@ export default function Sejarah() {
                 </div>
             </div>
 
-            {/* Wave Bawah */}
             <div className="w-full leading-0 -mt-px">
                 <svg
                     className="w-full h-24 md:h-48 lg:h-80 block"

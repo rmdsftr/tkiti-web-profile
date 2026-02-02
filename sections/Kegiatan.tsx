@@ -40,7 +40,6 @@ export default function Kegiatan() {
             className={`${inter.variable} w-full py-4 bg-white overflow-hidden`}
         >
             <div className="container mx-auto px-6 lg:px-12">
-                {/* Title */}
                 <motion.h2
                     className="text-3xl md:text-4xl font-extrabold text-black mb-16 md:mb-24 tracking-tighter uppercase text-center"
                     initial={{ opacity: 0, y: 20 }}
@@ -51,12 +50,9 @@ export default function Kegiatan() {
                     KEGIATAN
                 </motion.h2>
 
-                {/* Timeline */}
                 <div className="relative">
-                    {/* GARIS TENGAH (Hanya muncul di Desktop LG+) */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-[#11AEAF]/30 hidden lg:block rounded-full" />
 
-                    {/* Data Map */}
                     <div className="flex flex-col gap-12 lg:gap-0">
                         <div className="flex flex-col gap-12 lg:gap-0">
                             {activities.map((item, index) => {
@@ -65,7 +61,6 @@ export default function Kegiatan() {
                                 return (
                                     <motion.div
                                         key={index}
-                                        // Container Row
                                         className={`relative flex flex-col-reverse items-center w-full lg:gap-0 gap-8 ${
                                             isEven
                                                 ? "lg:flex-row"
@@ -82,7 +77,6 @@ export default function Kegiatan() {
                                             delay: index * 0.1,
                                         }}
                                     >
-                                        {/* === BAGIAN TEXT === */}
                                         <div
                                             className={`w-full lg:w-1/2 flex justify-center ${
                                                 isEven
@@ -100,18 +94,9 @@ export default function Kegiatan() {
                                             </div>
                                         </div>
 
-                                        {/* Connecting Line (Desktop) */}
                                         <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2 items-center justify-center hidden lg:flex">
-                                            {/* Dot */}
                                             <div className="w-4 h-4 bg-white border-[3px] border-[#11AEAF] rounded-full z-20 shadow-sm relative" />
 
-                                            {/* Line */}
-                                            {/* Logic: 
-                                                - w-16: Panjang garis
-                                                - top-1/2 -translate-y-1/2: Agar garis vertikal pas di tengah titik
-                                                - isEven (Konten Kiri): Pakai 'right-1/2' (Ujung kanan garis nempel di tengah titik, sisanya ke kiri)
-                                                - !isEven (Konten Kanan): Pakai 'left-1/2' (Ujung kiri garis nempel di tengah titik, sisanya ke kanan)
-                                            */}
                                             <div
                                                 className={`absolute h-0.5 bg-[#11AEAF]/30 w-16 top-1/2 -translate-y-1/2 z-0
                                                 ${isEven ? "right-1/2 mr-1" : "left-1/2 ml-1"}
@@ -119,7 +104,6 @@ export default function Kegiatan() {
                                             />
                                         </div>
 
-                                        {/* Image */}
                                         <div
                                             className={`w-full lg:w-1/2 flex justify-center ${
                                                 isEven
