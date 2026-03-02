@@ -121,6 +121,15 @@ model repositori {
   @@index([jenis_repo], map: "idx_repositori_jenis_repo")
 }
 
+model dosen {
+  nip        String        @id @db.VarChar(25)
+  nama_dosen String        @db.VarChar(255)
+  foto       String?       @db.Text
+  posisi     dosen_posisi? @default(anggota)
+
+  @@index([nama_dosen], map: "idx_nama_dosen")
+}
+
 enum pengurus_divisi {
   inti
   litbang
@@ -160,4 +169,9 @@ enum admin_role {
 enum admin_status {
   aktif
   nonaktif
+}
+
+enum dosen_posisi {
+  kepala
+  anggota
 }
